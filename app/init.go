@@ -1,14 +1,11 @@
 package app
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/joho/godotenv"
 	_ "github.com/revel/modules"
 	"github.com/revel/revel"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+
+	"Eatiplan-Auth/app/database"
 )
 
 var (
@@ -18,26 +15,6 @@ var (
 	// BuildTime revel app build-time (ldflags)
 	BuildTime string
 )
-
-// DB object
-var DB *gorm.DB
-
-func initDB() {
-	host := os.Getenv("DB_HOST")
-	user := os.Getenv("DB_USERNAME")
-	password := os.Getenv("DB_PASSWORD")
-	dbName := os.Getenv("DB_NAME")
-	port := os.Getenv("DB_PORT")
-
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", host, user, password, dbName, port)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
-	if err != nil {
-		revel.RevelLog.Error("Failed gorm.Open: %v\n", err)
-	}
-
-	DB = db
-}
 
 func init() {
 	err := godotenv.Load(".env")
@@ -67,7 +44,7 @@ func init() {
 	// revel.DevMode and revel.RunMode only work inside of OnAppStart. See Example Startup Script
 	// ( order dependent )
 	// revel.OnAppStart(ExampleStartupScript)
-	revel.OnAppStart(initDB)
+	revel.OnAppStart(database.InitDB)
 	// revel.OnAppStart(FillCache)
 }
 
