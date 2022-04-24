@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  eatiplan-auth:
+    image: #TODO: create image on docker hub
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/app
+    environment:
+      - ENV=dev
+      - DB_PORT=${DB_PORT}
+      - DB_HOST=${DB_HOST}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
