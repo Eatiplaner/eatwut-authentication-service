@@ -14,6 +14,11 @@ revel run myapp
 
     "It works"
 
+### Start the web server with docker:
+
+docker-compose build
+docker-compose up
+
 ## Code Layout
 
 The directory structure of a generated Revel application:

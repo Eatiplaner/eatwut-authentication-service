@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  eatiplan-auth:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/app
+    environment:
+      - ENV=dev
+      - DB_PORT=5432
+      - DB_HOST=postgres
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+      - DB_NAME=eatiplan-auth-development
+
+  postgres:
+    image: postgres:14.0-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/eatiplan-auth-development/pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=eatiplan-auth-development
