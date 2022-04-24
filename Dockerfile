@@ -1,11 +1,9 @@
 FROM golang:1.17.2-alpine AS base
 
 # Add required packages
-RUN apk add --update git curl bash
-
-# Install revel framework
-RUN go get -u github.com/revel/revel
-RUN go get -u github.com/revel/cmd/revel
+RUN apk add --update git curl bash && \
+		go get -u github.com/revel/revel && \
+		go get -u github.com/revel/cmd/revel
 
 WORKDIR /app
 
@@ -16,26 +14,29 @@ ENV CGO_ENABLED 0
 ADD . .
 
 # Dev target
-FROM base as dev
+FROM base as development
 ENTRYPOINT revel run
 
-# Unit Test target
-FROM base as unit-test
+# Test target
+FROM base as test
 RUN revel test .
 
-# Prod target
-FROM base as prod
+FROM base as builder
 ENV GOOS=linux \
     GOARCH=amd64
 
 RUN revel package .
 
-# Run stage
-FROM alpine:3.13
+# production target
+FROM alpine:3.13 as production
+
 RUN apk update && \
-    apk add mailcap tzdata && \
-    rm /var/cache/apk/*
+		apk add mailcap tzdata && \
+		rm /var/cache/apk/*
+
 WORKDIR /app
+
 COPY --from=builder /app/app.tar.gz .
+
 RUN tar -xzvf app.tar.gz && rm app.tar.gz
 ENTRYPOINT /app/run.sh

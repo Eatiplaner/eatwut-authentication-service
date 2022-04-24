@@ -5,8 +5,6 @@ services:
     image: #TODO: create image on docker hub
     ports:
       - 9000:9000
-    volumes:
-      - .:/app
     environment:
       - ENV=dev
       - DB_PORT=${DB_PORT}
