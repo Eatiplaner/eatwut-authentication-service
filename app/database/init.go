@@ -9,6 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 func InitDB() {
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USERNAME")
@@ -25,4 +27,6 @@ func InitDB() {
 		revel.RevelLog.Info("Connected Database")
 		RunMigration(db)
 	}
+
+	DB = db
 }

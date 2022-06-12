@@ -6,6 +6,7 @@ import (
 	"github.com/revel/revel"
 
 	"Eatiplan-Auth/app/database"
+	"Eatiplan-Auth/app/externals"
 )
 
 var (
@@ -44,7 +45,7 @@ func init() {
 	// revel.DevMode and revel.RunMode only work inside of OnAppStart. See Example Startup Script
 	// ( order dependent )
 	// revel.OnAppStart(ExampleStartupScript)
-	revel.OnAppStart(database.InitDB)
+	revel.OnAppStart(onAppStart)
 	// revel.OnAppStart(FillCache)
 }
 
@@ -58,6 +59,11 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	c.Response.Out.Header().Add("Referrer-Policy", "strict-origin-when-cross-origin")
 
 	fc[0](c, fc[1:]) // Execute the next filter stage.
+}
+
+func onAppStart() {
+	database.InitDB()
+	externals.InitRedis()
 }
 
 //func ExampleStartupScript() {
