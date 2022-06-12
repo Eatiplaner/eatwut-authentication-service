@@ -1,0 +1,19 @@
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-go@v3
+      with:
+        go-version: "1.17"
+        check-latest: true
+        cache: true
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_DB_HOST: localhost
+        envkey_DB_USERNAME: postgres
+        envkey_DB_PASSWORD: postgres
+        envkey_DB_NAME: ci_db_test
+        envkey_DB_PORT: 5432
+    - name: Install dependencies
+      shell: bash
+      run: go get -u github.com/revel/revel && go get -u github.com/revel/cmd/revel && go mod download
