@@ -13,16 +13,22 @@ ENV CGO_ENABLED 0
 
 ADD . .
 
-# Dev target
-FROM base as development
-ENTRYPOINT revel run
-
-# Test target
-FROM base as test
-RUN revel test .
-
 FROM base as builder
 ENV GOOS=linux \
     GOARCH=amd64
 
 RUN revel package .
+
+# production target
+FROM alpine:3.13 as production
+
+RUN apk update && \
+		apk add mailcap tzdata && \
+		rm /var/cache/apk/*
+
+WORKDIR /app
+
+COPY --from=builder /app/app.tar.gz .
+
+RUN tar -xzvf app.tar.gz && rm app.tar.gz
+ENTRYPOINT /app/run.sh
