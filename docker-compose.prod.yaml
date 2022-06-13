@@ -2,13 +2,14 @@ version: "3.9"
 
 services:
   eatiplan-auth:
-    image: #TODO: create image on docker hub
+    image: ghcr.io/eatiplan-project/eatiplan-authentication-service:latest
     ports:
       - 9000:9000
     environment:
       - ENV=dev
-      - DB_PORT=${DB_PORT}
-      - DB_HOST=${DB_HOST}
-      - DB_USERNAME=${DB_USERNAME}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
+      - DB_PORT=${EATIPLAN_DB_PORT}
+      - DB_HOST=${EATIPLAN_DB_HOST}
+      - DB_USERNAME=${EATIPLAN_DB_USERNAME}
+      - DB_PASSWORD=${EATIPLAN_DB_PASSWORD}
+      - DB_NAME=${EATIPLAN_DB_NAME}
+      - REDIS_DSN=${EATIPLAN_REDIS_DSN}
