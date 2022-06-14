@@ -24,7 +24,7 @@ func (c JwtAuth) Login() revel.Result {
 	c.Params.BindJSON(&userParams)
 
 	var current_user models.User
-	database.DB.Model(&models.User{UserName: userParams.UserName}).First(&current_user)
+	database.DB.Where("user_name = ? ", userParams.UserName).First(&current_user)
 
 	if !models.CheckPasswordHash(userParams.Password, current_user.Password) {
 		c.Response.Status = http.StatusUnauthorized
