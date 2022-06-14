@@ -26,7 +26,7 @@ func (t *JwtAuthTest) Before() {
 	database.DB.Create(&user)
 }
 
-func (t *JwtAuthTest) TestLoginApiWorks() {
+func (t *JwtAuthTest) TestLoginWithValidParams() {
 	values := map[string]string{"user_name": "testuser", "password": "123456"}
 	jsonValue, _ := json.Marshal(values)
 
@@ -37,7 +37,7 @@ func (t *JwtAuthTest) TestLoginApiWorks() {
 	t.AssertContains("refresh_token")
 }
 
-func (t *JwtAuthTest) TestLoginApiWithInValidParams() {
+func (t *JwtAuthTest) TestLoginWithInValidParams() {
 	values := map[string]string{"user_name": "testuser", "password": "12345"}
 	jsonValue, _ := json.Marshal(values)
 
@@ -46,7 +46,7 @@ func (t *JwtAuthTest) TestLoginApiWithInValidParams() {
 	t.AssertStatus(401)
 }
 
-func (t *JwtAuthTest) TestLogoutApiWorks() {
+func (t *JwtAuthTest) TestLogoutWithValidToken() {
 	values := map[string]string{"user_name": "testuser", "password": "123456"}
 	jsonValue, _ := json.Marshal(values)
 
@@ -63,12 +63,37 @@ func (t *JwtAuthTest) TestLogoutApiWorks() {
 	t.AssertOk()
 }
 
-func (t *JwtAuthTest) TestLogoutApiNotValidToken() {
+func (t *JwtAuthTest) TestLogoutWithInValidToken() {
 	req := t.PostCustom(t.BaseUrl()+"/logout", "application/json", nil)
 	req.Header.Set("Authorization", "abcd")
 
 	req.MakeRequest()
 	t.AssertStatus(401)
+}
+
+func (t *JwtAuthTest) TestRefreshTokenWithValidToken() {
+	values := map[string]string{"user_name": "testuser", "password": "123456"}
+	jsonValue, _ := json.Marshal(values)
+	t.Post("/login", "application/json", bytes.NewBuffer(jsonValue))
+
+	//Read the response body
+	var result JwtAuthResponse
+	json.Unmarshal(t.ResponseBody, &result)
+
+	values = map[string]string{"refresh_token": result.RefreshToken}
+	jsonValue, _ = json.Marshal(values)
+	req := t.PostCustom(t.BaseUrl()+"/tokens/refresh", "application/json", bytes.NewBuffer(jsonValue))
+
+	req.MakeRequest()
+	t.AssertOk()
+}
+
+func (t *JwtAuthTest) TestRefreshTokenWithInValidToken() {
+	req := t.PostCustom(t.BaseUrl()+"/tokens/refresh", "application/json", nil)
+	req.Header.Set("Authorization", "Bearer abcd")
+
+	req.MakeRequest()
+	t.AssertStatus(422)
 }
 
 func (t *JwtAuthTest) After() {
