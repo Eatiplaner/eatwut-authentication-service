@@ -6,7 +6,7 @@ import (
 	"github.com/revel/revel"
 
 	"Eatiplan-Auth/app/database"
-	"Eatiplan-Auth/app/externals"
+	"Eatiplan-Auth/app/integrations"
 )
 
 var (
@@ -63,7 +63,7 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 
 func onAppStart() {
 	database.InitDB()
-	externals.InitRedis()
+	integrations.InitRedis()
 }
 
 //func ExampleStartupScript() {

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package jwt_gprc;
+
+option go_package="./app/grpc/rpc_pb";
+
+service JwtService {
+	rpc ValidToken(ValidRequest) returns (ValidResponse) {}
+}
+
+message ValidRequest {
+	string token = 1;
+}
+
+message ValidResponse {
+	bool valid = 1;
+}

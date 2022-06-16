@@ -6,7 +6,7 @@ import (
 	"github.com/revel/revel"
 
 	"Eatiplan-Auth/app/database"
-	"Eatiplan-Auth/app/externals"
+	"Eatiplan-Auth/app/integrations"
 	"Eatiplan-Auth/app/models"
 	"Eatiplan-Auth/app/services"
 )
@@ -60,7 +60,7 @@ func (c JwtAuth) Refresh() revel.Result {
 	return renderToken(c, token, err)
 }
 
-func renderToken(c JwtAuth, token *externals.JwtToken, err error) revel.Result {
+func renderToken(c JwtAuth, token *integrations.JwtToken, err error) revel.Result {
 	if err != nil {
 		c.Response.Status = http.StatusUnprocessableEntity
 		return c.RenderJSON(err.Error())
