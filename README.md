@@ -4,16 +4,22 @@ A high-productivity web framework for the [Go language](http://www.golang.org/).
 
 ### Setup Git hooks:
 
+```bash
 pnpm install
 pnpm run prepare
+```
 
 ### Setup Environment:
 
-`cp .env.example .env`
+```bash
+cp .env.example .env
+```
 
 ### Start the web server:
 
+```bash
 revel run myapp
+```
 
 ### Go to http://localhost:9000/ and you'll see:
 
