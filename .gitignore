@@ -4,3 +4,4 @@ routes/
 target/
 .env
 node_modules/
+app/grpc/pb/*.proto
