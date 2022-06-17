@@ -3,3 +3,4 @@ tmp/
 routes/
 target/
 .env
+node_modules/

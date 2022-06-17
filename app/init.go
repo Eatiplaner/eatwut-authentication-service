@@ -6,6 +6,7 @@ import (
 	"github.com/revel/revel"
 
 	"Eatiplan-Auth/app/database"
+	eatiplan_grpc "Eatiplan-Auth/app/grpc"
 	"Eatiplan-Auth/app/integrations"
 )
 
@@ -64,6 +65,7 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 func onAppStart() {
 	database.InitDB()
 	integrations.InitRedis()
+	eatiplan_grpc.InitGrpc()
 }
 
 //func ExampleStartupScript() {
