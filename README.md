@@ -2,6 +2,11 @@
 
 A high-productivity web framework for the [Go language](http://www.golang.org/).
 
+### Setup Git hooks:
+
+pnpm install
+pnpm run prepare
+
 ### Setup Environment:
 
 `cp .env.example .env`
