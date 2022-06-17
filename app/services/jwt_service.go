@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"Eatiplan-Auth/app/externals"
+	"Eatiplan-Auth/app/integrations"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/revel/revel"
@@ -20,8 +20,8 @@ type AccessDetails struct {
 	UserId     uint64
 }
 
-func CreateToken(userid uint64) (*externals.JwtToken, error) {
-	td := &externals.JwtToken{}
+func CreateToken(userid uint64) (*integrations.JwtToken, error) {
+	td := &integrations.JwtToken{}
 	td.AtExpires = time.Now().Add(time.Minute * 15).Unix()
 	td.AccessUuid = uuid.NewV4().String()
 
@@ -59,7 +59,7 @@ func CreateToken(userid uint64) (*externals.JwtToken, error) {
 	return td, nil
 }
 
-func RefreshToken(refreshToken string) (*externals.JwtToken, error) {
+func RefreshToken(refreshToken string) (*integrations.JwtToken, error) {
 	//Since token is valid, get the uuid:
 	token, err := verifyRefreshToken(refreshToken)
 	if err != nil {
@@ -97,8 +97,8 @@ func RefreshToken(refreshToken string) (*externals.JwtToken, error) {
 	return ts, nil
 }
 
-func TokenValid(r *revel.Request) error {
-	token, err := verifyToken(r)
+func TokenValid(tokenString string) error {
+	token, err := verifyToken(tokenString)
 	if err != nil {
 		return err
 	}
@@ -133,8 +133,7 @@ func DeleteAuthFromRequest(r *revel.Request) (int64, error) {
 }
 
 // Private
-func verifyToken(r *revel.Request) (*jwt.Token, error) {
-	tokenString := extractToken(r)
+func verifyToken(tokenString string) (*jwt.Token, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		//Make sure that the token method conform to "SigningMethodHMAC"
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -174,7 +173,8 @@ func extractToken(r *revel.Request) string {
 }
 
 func extractTokenMetadata(r *revel.Request) (*AccessDetails, error) {
-	token, err := verifyToken(r)
+	tokenString := extractToken(r)
+	token, err := verifyToken(tokenString)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func extractTokenMetadata(r *revel.Request) (*AccessDetails, error) {
 }
 
 func fetchAuth(authD *AccessDetails) (uint64, error) {
-	userid, err := externals.RedisClient.Get(authD.AccessUuid).Result()
+	userid, err := integrations.RedisClient.Get(authD.AccessUuid).Result()
 	if err != nil {
 		return 0, err
 	}
@@ -205,16 +205,16 @@ func fetchAuth(authD *AccessDetails) (uint64, error) {
 	return userID, nil
 }
 
-func createAuth(userid uint64, td *externals.JwtToken) error {
+func createAuth(userid uint64, td *integrations.JwtToken) error {
 	at := time.Unix(td.AtExpires, 0) //converting Unix to UTC(to Time object)
 	rt := time.Unix(td.RtExpires, 0)
 	now := time.Now()
 
-	errAccess := externals.RedisClient.Set(td.AccessUuid, strconv.Itoa(int(userid)), at.Sub(now)).Err()
+	errAccess := integrations.RedisClient.Set(td.AccessUuid, strconv.Itoa(int(userid)), at.Sub(now)).Err()
 	if errAccess != nil {
 		return errAccess
 	}
-	errRefresh := externals.RedisClient.Set(td.RefreshUuid, strconv.Itoa(int(userid)), rt.Sub(now)).Err()
+	errRefresh := integrations.RedisClient.Set(td.RefreshUuid, strconv.Itoa(int(userid)), rt.Sub(now)).Err()
 	if errRefresh != nil {
 		return errRefresh
 	}
@@ -222,7 +222,7 @@ func createAuth(userid uint64, td *externals.JwtToken) error {
 }
 
 func deleteAuth(givenUuid string) (int64, error) {
-	deleted, err := externals.RedisClient.Del(givenUuid).Result()
+	deleted, err := integrations.RedisClient.Del(givenUuid).Result()
 	if err != nil {
 		return 0, err
 	}

@@ -16,6 +16,7 @@ require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/go-redis/redis/v7 v7.4.1 // indirect
 	github.com/go-stack/stack v1.8.1 // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gomodule/redigo v1.8.8 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/huandu/xstrings v1.3.2 // indirect
@@ -42,6 +43,9 @@ require (
 	golang.org/x/net v0.0.0-20220412020605-290c469a71a5 // indirect
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 	golang.org/x/text v0.3.7 // indirect
+	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
+	google.golang.org/grpc v1.47.0 // indirect
+	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/stack.v0 v0.0.0-20141108040640-9b43fcefddd0 // indirect
 	gorm.io/driver/postgres v1.3.4 // indirect
