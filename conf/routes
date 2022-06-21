@@ -11,7 +11,6 @@ GET     /                                       App.Index
 POST    /login                                  JwtAuth.Login
 POST    /logout                                 JwtAuth.Logout
 POST    /tokens/refresh                         JwtAuth.Refresh
-POST    /signup                                 User.CreateUser
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
