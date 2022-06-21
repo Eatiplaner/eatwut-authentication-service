@@ -1,10 +1,12 @@
-name: CD
+name: Release
 
-on: [pull_request]
+on:
+  push:
+    tags:
+      - "v*.*.*-staging"
 
 jobs:
   build:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,7 +16,6 @@ jobs:
       - name: build
         run: revel package .
   publish-image:
-    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
