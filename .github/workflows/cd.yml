@@ -1,9 +1,6 @@
 name: CD
 
-on:
-  push:
-    branches:
-      - main
+on: [pull_request]
 
 jobs:
   build:
@@ -31,5 +28,5 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build --tag ghcr.io/eatiplan-project/eatiplan-authentication-service:latest -f Dockerfile.prod .
-          docker push ghcr.io/eatiplan-project/eatiplan-authentication-service:latest
+          docker build --tag ghcr.io/eatiplaner/eatiplan-authentication-service:latest -f Dockerfile.prod .
+          docker push ghcr.io/eatiplaner/eatiplan-authentication-service:latest
