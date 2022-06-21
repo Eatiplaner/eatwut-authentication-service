@@ -1,8 +1,6 @@
 package tests
 
 import (
-	"Eatiplan-Auth/app/database"
-	"Eatiplan-Auth/app/models"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -18,12 +16,7 @@ type JwtAuthResponse struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-var user models.User
-
 func (t *JwtAuthTest) Before() {
-	hashPassword, _ := models.HashPassword("123456")
-	user = models.User{UserName: "testuser", Password: hashPassword}
-	database.DB.Create(&user)
 }
 
 func (t *JwtAuthTest) TestLoginWithValidParams() {
@@ -97,5 +90,4 @@ func (t *JwtAuthTest) TestRefreshTokenWithInValidToken() {
 }
 
 func (t *JwtAuthTest) After() {
-	database.DB.Delete(&user)
 }

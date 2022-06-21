@@ -5,9 +5,7 @@ import (
 
 	"github.com/revel/revel"
 
-	"Eatiplan-Auth/app/database"
 	"Eatiplan-Auth/app/integrations"
-	"Eatiplan-Auth/app/models"
 	"Eatiplan-Auth/app/services"
 )
 
@@ -23,16 +21,15 @@ func (c JwtAuth) Login() revel.Result {
 	var userParams UserSt
 	c.Params.BindJSON(&userParams)
 
-	var current_user models.User
-	database.DB.Where("user_name = ? ", userParams.UserName).First(&current_user)
-
-	if !models.CheckPasswordHash(userParams.Password, current_user.Password) {
+	// TODO: replace password with grpc valid user
+	if userParams.Password != "123456" {
 		c.Response.Status = http.StatusUnauthorized
 
 		return c.RenderJSON("Your Username or Password is not correct")
 	}
 
-	token, err := services.CreateToken(uint64(current_user.ID))
+	// TODO: replace 1 with real user id
+	token, err := services.CreateToken(uint64(1))
 	return renderToken(c, token, err)
 }
 
