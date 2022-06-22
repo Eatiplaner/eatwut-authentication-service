@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   eatiplan-auth:
-    image: ghcr.io/eatiplan-project/eatiplan-authentication-service:latest
+    image: ghcr.io/eatiplaner/eatiplaner-authentication-service:latest
     ports:
       - 9000:9000
     env_file:

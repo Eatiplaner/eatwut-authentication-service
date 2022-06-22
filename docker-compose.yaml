@@ -16,7 +16,6 @@ services:
       - ENV=dev
       - REDIS_DSN=cache:6379
 
-
   cache:
     image: redis:6.2-alpine
     restart: always
