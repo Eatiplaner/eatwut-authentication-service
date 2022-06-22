@@ -24,5 +24,3 @@ RUN revel test .
 FROM base as builder
 ENV GOOS=linux \
     GOARCH=amd64
-
-RUN revel package .

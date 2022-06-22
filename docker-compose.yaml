@@ -7,7 +7,6 @@ services:
       dockerfile: ./Dockerfile
       target: development
     depends_on:
-      - postgres
       - cache
     ports:
       - 9000:9000
@@ -15,23 +14,8 @@ services:
       - .:/app
     environment:
       - ENV=dev
-      - DB_PORT=5432
-      - DB_HOST=postgres
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=password
-      - DB_NAME=eatiplan-auth-development
       - REDIS_DSN=cache:6379
 
-  postgres:
-    image: postgres:14.0-alpine
-    ports:
-      - 5432:5432
-    volumes:
-      - ~/apps/eatiplan-auth-development/pgdata:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=eatiplan-auth-development
 
   cache:
     image: redis:6.2-alpine
