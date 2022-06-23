@@ -16,6 +16,7 @@ rules:
       - perf
       - test
       - revert
+      - release
 help: |
   **Possible types**:
   `chore`:    Change build process, tooling or dependencies.
@@ -29,3 +30,4 @@ help: |
   `perf`:     Improves performance.
   `test`:     Adds or modifies tests.
   `revert`:   Changes that reverting other changes
+  `release`:  Release new features

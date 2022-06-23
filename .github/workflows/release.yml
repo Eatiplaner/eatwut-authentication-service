@@ -29,5 +29,5 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          docker build --target production --tag ghcr.io/eatiplaner/eatiplaner-authentication-service:latest -f Dockerfile.prod .
+          docker build --tag ghcr.io/eatiplaner/eatiplaner-authentication-service:latest -f Dockerfile.prod .
           docker push ghcr.io/eatiplaner/eatiplaner-authentication-service:latest
