@@ -20,7 +20,7 @@ ENV GOOS=linux \
 RUN revel package .
 
 # production target
-FROM alpine:3.13
+FROM alpine:3.13 as production
 
 RUN apk update && \
 		apk add mailcap tzdata && \

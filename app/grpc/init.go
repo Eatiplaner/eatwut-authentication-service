@@ -9,6 +9,8 @@ import (
 	"google.golang.org/grpc"
 
 	pb "Eatiplan-Auth/app/grpc/rpc_pb"
+	"google.golang.org/grpc/reflection"
+
 	"Eatiplan-Auth/app/grpc/server"
 )
 
@@ -28,6 +30,9 @@ func InitGrpc() {
 
 		s := grpc.NewServer()
 		pb.RegisterJwtServiceServer(s, &server.JwtServer{})
+
+		// Register reflection service on gRPC server.
+		reflection.Register(s)
 
 		fmt.Println("gRPC Server listening on port 8080")
 
