@@ -9,12 +9,12 @@ import (
 var RedisClient *redis.Client
 
 type JwtToken struct {
-  AccessToken  string
-  RefreshToken string
-  AccessUuid   string
-  RefreshUuid  string
-  AtExpires    int64
-  RtExpires    int64
+	AccessToken  string
+	RefreshToken string
+	AccessUuid   string
+	RefreshUuid  string
+	AtExpires    int64
+	RtExpires    int64
 }
 
 func InitRedis() {

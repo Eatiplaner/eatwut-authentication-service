@@ -89,5 +89,27 @@ func (t *JwtAuthTest) TestRefreshTokenWithInValidToken() {
 	t.AssertStatus(422)
 }
 
+func (t *JwtAuthTest) TestSignup() {
+	values := map[string]string{
+		"user_name":  "testuser",
+		"password":   "123456",
+		"email":      "test@gmail.com",
+		"first_name": "john",
+		"last_name":  "nguyen",
+	}
+	jsonValue, _ := json.Marshal(values)
+
+	t.Post("/signup", "application/json", bytes.NewBuffer(jsonValue))
+
+	t.AssertOk()
+	t.AssertContains("user")
+	t.AssertContains("email")
+	t.AssertContains("first_name")
+	t.AssertContains("last_name")
+	t.AssertContains("user_name")
+	t.AssertContains("access_token")
+	t.AssertContains("refresh_token")
+}
+
 func (t *JwtAuthTest) After() {
 }

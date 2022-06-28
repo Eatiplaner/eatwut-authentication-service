@@ -13,8 +13,11 @@ type JwtAuth struct {
 	*revel.Controller
 }
 type UserSt struct {
-	UserName string `json:"user_name"`
-	Password string `json:"password"`
+	UserName  string `json:"user_name"`
+	Password  string `json:"password"`
+	Email     string `json:"email"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
 }
 
 func (c JwtAuth) Login() revel.Result {
@@ -31,6 +34,31 @@ func (c JwtAuth) Login() revel.Result {
 	// TODO: replace 1 with real user id
 	token, err := services.CreateToken(uint64(1))
 	return renderToken(c, token, err)
+}
+
+func (c JwtAuth) Signup() revel.Result {
+	var userParams UserSt
+	c.Params.BindJSON(&userParams)
+
+	// TODO: integrate call grpc create user
+	// TODO: replace 1 with real user id
+	token, err := services.CreateToken(uint64(1))
+
+	if err != nil {
+		c.Response.Status = http.StatusUnprocessableEntity
+		return c.RenderJSON(err.Error())
+	}
+
+	return c.RenderJSON(map[string]interface{}{
+		"user": map[string]string{
+			"email":      userParams.Email,
+			"user_name":  userParams.UserName,
+			"first_name": userParams.FirstName,
+			"last_name":  userParams.LastName,
+		},
+		"access_token":  token.AccessToken,
+		"refresh_token": token.RefreshToken,
+	})
 }
 
 func (c JwtAuth) Logout() revel.Result {
