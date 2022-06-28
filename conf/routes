@@ -10,7 +10,7 @@ module:testrunner
 GET     /                                       App.Index
 POST    /login                                  JwtAuth.Login
 POST    /logout                                 JwtAuth.Logout
-POST    /tokens/refresh                         JwtAuth.Refresh
+POST    /refresh_tokens                         JwtAuth.Refresh
 POST    /signup																	JwtAuth.Signup
 
 # Ignore favicon requests

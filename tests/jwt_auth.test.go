@@ -75,14 +75,14 @@ func (t *JwtAuthTest) TestRefreshTokenWithValidToken() {
 
 	values = map[string]string{"refresh_token": result.RefreshToken}
 	jsonValue, _ = json.Marshal(values)
-	req := t.PostCustom(t.BaseUrl()+"/tokens/refresh", "application/json", bytes.NewBuffer(jsonValue))
+	req := t.PostCustom(t.BaseUrl()+"/refresh_tokens", "application/json", bytes.NewBuffer(jsonValue))
 
 	req.MakeRequest()
 	t.AssertOk()
 }
 
 func (t *JwtAuthTest) TestRefreshTokenWithInValidToken() {
-	req := t.PostCustom(t.BaseUrl()+"/tokens/refresh", "application/json", nil)
+	req := t.PostCustom(t.BaseUrl()+"/refresh_tokens", "application/json", nil)
 	req.Header.Set("Authorization", "Bearer abcd")
 
 	req.MakeRequest()
