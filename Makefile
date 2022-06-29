@@ -1,5 +1,7 @@
 include .env
 gen-proto:
+	protoc app/grpc/pb/jwt.proto --go_out=plugins=grpc:.
+sync-proto:
 	curl -H "Authorization: token $(GH_PROTO_REPO_TOKEN)" \
 		-H "Accept: application/vnd.github.v3.raw" \
 		-o app/grpc/pb/jwt.proto \

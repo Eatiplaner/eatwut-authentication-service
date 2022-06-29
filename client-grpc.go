@@ -30,5 +30,5 @@ func main() {
 		log.Fatalf("call valid request err %v", err)
 	}
 
-	log.Println("Token is valid")
+	log.Println("Call Token done")
 }
