@@ -15,6 +15,13 @@ pnpm run prepare
 cp .env.example .env
 ```
 
+### Sync Proto:
+
+```bash
+brew install yq # For Mac
+./scripts/sync-proto
+```
+
 ### Start the web server:
 
 ```bash
