@@ -4,7 +4,4 @@ routes/
 target/
 .env
 node_modules/
-<<<<<<< HEAD
 app/grpc/pb/*.proto
-=======
->>>>>>> main
