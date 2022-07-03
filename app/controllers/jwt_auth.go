@@ -5,6 +5,8 @@ import (
 
 	"github.com/revel/revel"
 
+	"Eatiplan-Auth/app/grpc/client"
+	"Eatiplan-Auth/app/grpc/rpc_pb"
 	"Eatiplan-Auth/app/integrations"
 	"Eatiplan-Auth/app/services"
 )
@@ -13,7 +15,7 @@ type JwtAuth struct {
 	*revel.Controller
 }
 type UserSt struct {
-	UserName  string `json:"user_name"`
+	Username  string `json:"username"`
 	Password  string `json:"password"`
 	Email     string `json:"email"`
 	FirstName string `json:"first_name"`
@@ -21,44 +23,34 @@ type UserSt struct {
 }
 
 func (c JwtAuth) Login() revel.Result {
-	var userParams UserSt
+	var userParams rpc_pb.FindUserRequest
 	c.Params.BindJSON(&userParams)
 
-	// TODO: replace password with grpc valid user
-	if userParams.Password != "123456" {
-		c.Response.Status = http.StatusUnauthorized
+	user, err := client.FindUserByCredential(&userParams)
 
-		return c.RenderJSON("Your Username or Password is not correct")
+	if err != nil {
+		c.Response.Status = http.StatusNotFound
+		return c.RenderJSON("Please provide correct credential")
 	}
 
-	// TODO: replace 1 with real user id
-	token, err := services.CreateToken(uint64(1))
-	return renderToken(c, token, err)
+	token, err := services.CreateToken(uint64(user.Id))
+	return renderUserAndToken(c, user, token, err)
 }
 
 func (c JwtAuth) Signup() revel.Result {
-	var userParams UserSt
+	var userParams rpc_pb.CreateRequest
 	c.Params.BindJSON(&userParams)
 
-	// TODO: integrate call grpc create user
-	// TODO: replace 1 with real user id
-	token, err := services.CreateToken(uint64(1))
+	user, err := client.CreateUser(&userParams)
 
 	if err != nil {
 		c.Response.Status = http.StatusUnprocessableEntity
 		return c.RenderJSON(err.Error())
 	}
 
-	return c.RenderJSON(map[string]interface{}{
-		"user": map[string]string{
-			"email":      userParams.Email,
-			"user_name":  userParams.UserName,
-			"first_name": userParams.FirstName,
-			"last_name":  userParams.LastName,
-		},
-		"access_token":  token.AccessToken,
-		"refresh_token": token.RefreshToken,
-	})
+	token, err := services.CreateToken(uint64(1))
+
+	return renderUserAndToken(c, user, token, err)
 }
 
 func (c JwtAuth) Logout() revel.Result {
@@ -83,6 +75,24 @@ func (c JwtAuth) Refresh() revel.Result {
 
 	token, err := services.RefreshToken(refreshToken)
 	return renderToken(c, token, err)
+}
+
+func renderUserAndToken(
+	c JwtAuth,
+	user *rpc_pb.UserResponse,
+	token *integrations.JwtToken,
+	err error) revel.Result {
+	if err != nil {
+		c.Response.Status = http.StatusUnprocessableEntity
+		return c.RenderJSON(err.Error())
+	}
+
+	c.Response.Status = http.StatusOK
+	return c.RenderJSON(map[string]interface{}{
+		"user":          user,
+		"access_token":  token.AccessToken,
+		"refresh_token": token.RefreshToken,
+	})
 }
 
 func renderToken(c JwtAuth, token *integrations.JwtToken, err error) revel.Result {

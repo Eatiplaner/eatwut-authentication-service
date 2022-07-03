@@ -73,7 +73,7 @@ var ValidateOrigin = func(c *revel.Controller, fc []revel.Filter) {
 
 func onAppStart() {
 	integrations.InitRedis()
-	eatiplan_grpc.InitGrpc()
+	eatiplan_grpc.InitGrpcServer()
 }
 
 //func ExampleStartupScript() {
