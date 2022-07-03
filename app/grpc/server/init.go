@@ -1,4 +1,4 @@
-package grpc
+package server
 
 import (
 	"fmt"
@@ -13,8 +13,6 @@ import (
 
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
-
-	"Eatiplan-Auth/app/grpc/server"
 )
 
 func InitGrpcServer() {
@@ -25,19 +23,22 @@ func InitGrpcServer() {
 	}
 
 	go func() {
-		lis, err := net.Listen("tcp", ":8080")
+		grpc_port := os.Getenv("GRPC_SERVER_PORT")
+
+		lis, err := net.Listen("tcp", fmt.Sprintf(":%s", grpc_port))
 
 		if err != nil {
 			log.Fatalf("err while create listen %v", err)
 		}
 
 		s := grpc.NewServer()
-		pb.RegisterJwtServiceServer(s, &server.JwtServer{})
+		pb.RegisterJwtServiceServer(s, &JwtServer{})
 
 		// Register reflection service on gRPC server.
 		reflection.Register(s)
 
-		fmt.Println("gRPC Server listening on port 8080")
+		fmt.Println()
+		fmt.Printf("gRPC Server listening on port %s", grpc_port)
 
 		err = s.Serve(lis)
 

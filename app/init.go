@@ -7,7 +7,7 @@ import (
 	_ "github.com/revel/modules"
 	"github.com/revel/revel"
 
-	eatiplan_grpc "Eatiplan-Auth/app/grpc"
+	eatiplan_grpc "Eatiplan-Auth/app/grpc/server"
 	"Eatiplan-Auth/app/integrations"
 )
 

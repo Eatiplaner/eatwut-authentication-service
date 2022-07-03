@@ -24,9 +24,10 @@ type UserSt struct {
 
 func (c JwtAuth) Login() revel.Result {
 	var userParams rpc_pb.FindUserRequest
+
 	c.Params.BindJSON(&userParams)
 
-	user, err := client.FindUserByCredential(&userParams)
+	user, err := client.Service.FindUserByCredential(&userParams)
 
 	if err != nil {
 		c.Response.Status = http.StatusNotFound
@@ -41,7 +42,7 @@ func (c JwtAuth) Signup() revel.Result {
 	var userParams rpc_pb.CreateRequest
 	c.Params.BindJSON(&userParams)
 
-	user, err := client.CreateUser(&userParams)
+	user, err := client.Service.CreateUser(&userParams)
 
 	if err != nil {
 		c.Response.Status = http.StatusUnprocessableEntity

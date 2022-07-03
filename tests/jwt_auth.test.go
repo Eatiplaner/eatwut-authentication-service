@@ -5,9 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"Eatiplan-Auth/app/grpc/rpc_pb"
-
-	"github.com/golang/mock/gomock"
 	"github.com/revel/revel/testing"
 )
 
@@ -19,26 +16,10 @@ type JwtAuthResponse struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func MockFindUserByCredential(p *rpc_pb.FindUserRequest) (*rpc_pb.UserResponse, error) {
-	var request_error error
+func (t *JwtAuthTest) Before() {}
 
-	if p.Password != "123456" {
-		request_error = fmt.Errorf("find user error")
-	}
-
-	return &rpc_pb.UserResponse{
-		Username:  *p.Username,
-		Email:     "test@gmail.com",
-		LastName:  "test",
-		Id:        1,
-		FirstName: "test",
-	}, request_error
-}
-
-func (t *JwtAuthTest) Before() {
-}
-
-func (t *JwtAuthTest) TestLoginWithValidParams() {
+/* TODO: Mock Data Connect with GRPC
+func (t *JwtAuthTest) TestLoginWithCorrectCrendential() {
 	values := map[string]string{"username": "testuser", "password": "123456"}
 	jsonValue, _ := json.Marshal(values)
 
@@ -49,14 +30,14 @@ func (t *JwtAuthTest) TestLoginWithValidParams() {
 	t.AssertContains("refresh_token")
 }
 
-func (t *JwtAuthTest) TestLoginWithInValidParams() {
+func (t *JwtAuthTest) TestLoginWithWrongCrendential() {
 	values := map[string]string{"username": "testuser", "password": "12345"}
 	jsonValue, _ := json.Marshal(values)
 
 	t.Post("/login", "application/json", bytes.NewBuffer(jsonValue))
 
 	t.AssertStatus(401)
-}
+} */
 
 func (t *JwtAuthTest) TestLogoutWithValidToken() {
 	values := map[string]string{"username": "testuser", "password": "123456"}
@@ -108,8 +89,8 @@ func (t *JwtAuthTest) TestRefreshTokenWithInValidToken() {
 	t.AssertStatus(422)
 }
 
-// TODO: build test db server
-/* func (t *JwtAuthTest) TestSignup() {
+/* TODO: Mock Data Connect with GRPC
+func (t *JwtAuthTest) TestSignup() {
 	values := map[string]string{
 		"username":   "testuser",
 		"password":   "123456",
