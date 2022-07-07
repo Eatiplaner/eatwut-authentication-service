@@ -14,13 +14,6 @@ import (
 type JwtAuth struct {
 	*revel.Controller
 }
-type UserSt struct {
-	Username  string `json:"username"`
-	Password  string `json:"password"`
-	Email     string `json:"email"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-}
 
 func (c JwtAuth) Login() revel.Result {
 	var userParams rpc_pb.FindUserRequest
