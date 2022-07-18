@@ -48,7 +48,8 @@ func (c JwtAuth) Signup() revel.Result {
 	procedures.SendNotification(map[string]interface{}{
 		"communication_type": "email",
 		"data": map[string]string{
-			"username":     user.Username,
+			"full_name":    user.FullName,
+			"to_email":     user.Email,
 			"token":        token.AccessToken,
 			"template_key": "sign_up",
 		},
