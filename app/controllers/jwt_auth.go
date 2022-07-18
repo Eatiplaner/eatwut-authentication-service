@@ -8,6 +8,7 @@ import (
 	"Eatiplan-Auth/app/grpc/client"
 	"Eatiplan-Auth/app/grpc/rpc_pb"
 	"Eatiplan-Auth/app/integrations"
+	"Eatiplan-Auth/app/kafka/procedures"
 	"Eatiplan-Auth/app/services"
 )
 
@@ -43,6 +44,15 @@ func (c JwtAuth) Signup() revel.Result {
 	}
 
 	token, err := services.CreateToken(uint64(1))
+
+	procedures.SendNotification(map[string]interface{}{
+		"communication_type": "email",
+		"data": map[string]string{
+			"username":     user.Username,
+			"token":        token.AccessToken,
+			"template_key": "sign_up",
+		},
+	})
 
 	return renderUserAndToken(c, user, token, err)
 }
