@@ -1,7 +1,7 @@
 package procedures
 
 import (
-	"Eatiplan-Auth/app/kafka"
+	kafka_config "Eatiplan-Auth/app/kafka"
 	"encoding/json"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
