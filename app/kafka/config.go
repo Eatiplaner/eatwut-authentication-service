@@ -1,4 +1,4 @@
-package kafka_config
+package kafka
 
 import (
 	"os"
