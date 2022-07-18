@@ -2,28 +2,34 @@ package procedures
 
 import (
 	kafka_config "Eatiplan-Auth/app/kafka"
-	"encoding/json"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"context"
+	"encoding/json"
+	"log"
+	"time"
+
+	"github.com/segmentio/kafka-go"
 )
 
 func SendNotification(msg map[string]interface{}) {
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": kafka_config.KafkaHost})
-	if err != nil {
-		panic(err)
-	}
-
-	defer p.Close()
-
 	topic := "send_notification"
+	partition := 0
 
 	b, _ := json.Marshal(msg)
 
-	p.Produce(&kafka.Message{
-		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-		Value:          b,
-	}, nil)
+	conn, err := kafka.DialLeader(context.Background(), "tcp", kafka_config.KafkaHost, topic, partition)
+	if err != nil {
+		log.Fatal("failed to dial leader:", err)
+	}
 
-	// Wait for message deliveries before shutting down
-	p.Flush(100)
+	conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
+	_, err = conn.Write(b)
+
+	if err != nil {
+		log.Fatal("failed to write messages:", err)
+	}
+
+	if err := conn.Close(); err != nil {
+		log.Fatal("failed to close writer:", err)
+	}
 }
