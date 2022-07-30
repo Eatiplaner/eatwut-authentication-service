@@ -33,6 +33,7 @@ func InitGrpcServer() {
 
 		s := grpc.NewServer()
 		pb.RegisterJwtServiceServer(s, &JwtServer{})
+		pb.RegisterActivationServiceServer(s, &ActivationServer{})
 
 		// Register reflection service on gRPC server.
 		reflection.Register(s)
