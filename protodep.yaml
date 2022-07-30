@@ -5,5 +5,8 @@ token_key: GH_PROTO_REPO_TOKEN
 outdir: app/grpc/rpc_pb
 dependencies:
   - auth/jwt
+  - auth/activation
   - user/login_signup
+  - user/confirmation
+  - user/profile
 command: protoc $outpb/$dependency.proto --go_out=plugins=grpc:.

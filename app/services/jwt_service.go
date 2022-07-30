@@ -122,6 +122,20 @@ func ExtractUserIdFromRequest(r *revel.Request) (uint64, error) {
 	return userId, nil
 }
 
+func ExtractUserIdFromToken(tokenString string) (uint64, error) {
+	tokenAuth, err := extractTokenString(tokenString)
+	if err != nil {
+		return 0, err
+	}
+
+	userId, err := fetchAuth(tokenAuth)
+	if err != nil {
+		return 0, err
+	}
+
+	return userId, nil
+}
+
 func DeleteAuthFromRequest(r *revel.Request) (int64, error) {
 	au, err := extractTokenMetadata(r)
 
@@ -174,6 +188,10 @@ func extractToken(r *revel.Request) string {
 
 func extractTokenMetadata(r *revel.Request) (*AccessDetails, error) {
 	tokenString := extractToken(r)
+	return extractTokenString(tokenString)
+}
+
+func extractTokenString(tokenString string) (*AccessDetails, error) {
 	token, err := verifyToken(tokenString)
 	if err != nil {
 		return nil, err
