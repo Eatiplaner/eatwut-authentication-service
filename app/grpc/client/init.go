@@ -10,12 +10,12 @@ import (
 )
 
 type ClientService struct {
-	conn *grpc.ClientConn
+	conn func() *grpc.ClientConn
 }
 
 func New() ClientService {
 	return ClientService{
-		conn: InitGrpcClient(),
+		conn: InitGrpcClient,
 	}
 }
 
