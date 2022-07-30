@@ -2,6 +2,7 @@ package server
 
 import (
 	"Eatiplan-Auth/app/grpc/client"
+	"Eatiplan-Auth/app/grpc/rpc_pb"
 	pb "Eatiplan-Auth/app/grpc/rpc_pb"
 	"context"
 	"log"
@@ -15,7 +16,7 @@ type ActivationServer struct {
 	pb.ActivationServiceServer
 }
 
-func (*ActivationServer) ActiveUser(ctx context.Context, req *pb.ActiveUserReq) (*emptypb.Empty, error) {
+func (*ActivationServer) ActivateUser(ctx context.Context, req *pb.ActivateUserReq) (*emptypb.Empty, error) {
 	log.Println("Active User is processing...")
 	log.Printf("Token: %s", req.GetToken())
 
@@ -23,8 +24,8 @@ func (*ActivationServer) ActiveUser(ctx context.Context, req *pb.ActiveUserReq) 
 	error := services.TokenValid(token)
 
 	if error == nil {
-		_, err := client.Service.UpdateProfile(&pb.UpdateProfileRequest{
-			Data: &pb.UpdateProfileData{IsActiveOneof: &pb.UpdateProfileData_IsActive{IsActive: true}},
+		_, err := client.Service.ActiveUser(&rpc_pb.ActiveUserReq{
+			Token: token,
 		})
 
 		if err != nil {

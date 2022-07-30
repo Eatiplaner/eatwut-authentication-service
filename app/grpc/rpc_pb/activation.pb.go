@@ -25,7 +25,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type ActiveUserReq struct {
+type ActivateUserReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -33,8 +33,8 @@ type ActiveUserReq struct {
 	Token string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 }
 
-func (x *ActiveUserReq) Reset() {
-	*x = ActiveUserReq{}
+func (x *ActivateUserReq) Reset() {
+	*x = ActivateUserReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_app_grpc_pb_activation_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -42,13 +42,13 @@ func (x *ActiveUserReq) Reset() {
 	}
 }
 
-func (x *ActiveUserReq) String() string {
+func (x *ActivateUserReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ActiveUserReq) ProtoMessage() {}
+func (*ActivateUserReq) ProtoMessage() {}
 
-func (x *ActiveUserReq) ProtoReflect() protoreflect.Message {
+func (x *ActivateUserReq) ProtoReflect() protoreflect.Message {
 	mi := &file_app_grpc_pb_activation_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -60,12 +60,12 @@ func (x *ActiveUserReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ActiveUserReq.ProtoReflect.Descriptor instead.
-func (*ActiveUserReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use ActivateUserReq.ProtoReflect.Descriptor instead.
+func (*ActivateUserReq) Descriptor() ([]byte, []int) {
 	return file_app_grpc_pb_activation_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ActiveUserReq) GetToken() string {
+func (x *ActivateUserReq) GetToken() string {
 	if x != nil {
 		return x.Token
 	}
@@ -79,16 +79,16 @@ var file_app_grpc_pb_activation_proto_rawDesc = []byte{
 	0x74, 0x69, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x04,
 	0x61, 0x75, 0x74, 0x68, 0x1a, 0x1b, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f,
 	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x22, 0x25, 0x0a, 0x0d, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52,
-	0x65, 0x71, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x32, 0x50, 0x0a, 0x11, 0x41, 0x63, 0x74, 0x69,
-	0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x3b, 0x0a,
-	0x0a, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x55, 0x73, 0x65, 0x72, 0x12, 0x13, 0x2e, 0x61, 0x75,
-	0x74, 0x68, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x65, 0x55, 0x73, 0x65, 0x72, 0x52, 0x65, 0x71,
-	0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
-	0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00, 0x42, 0x13, 0x5a, 0x11, 0x2e, 0x2f,
-	0x61, 0x70, 0x70, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x72, 0x70, 0x63, 0x5f, 0x70, 0x62, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6f, 0x22, 0x27, 0x0a, 0x0f, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65,
+	0x72, 0x52, 0x65, 0x71, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x32, 0x54, 0x0a, 0x11, 0x41, 0x63,
+	0x74, 0x69, 0x76, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12,
+	0x3f, 0x0a, 0x0c, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x55, 0x73, 0x65, 0x72, 0x12,
+	0x15, 0x2e, 0x61, 0x75, 0x74, 0x68, 0x2e, 0x41, 0x63, 0x74, 0x69, 0x76, 0x61, 0x74, 0x65, 0x55,
+	0x73, 0x65, 0x72, 0x52, 0x65, 0x71, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x22, 0x00,
+	0x42, 0x13, 0x5a, 0x11, 0x2e, 0x2f, 0x61, 0x70, 0x70, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x2f, 0x72,
+	0x70, 0x63, 0x5f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -105,12 +105,12 @@ func file_app_grpc_pb_activation_proto_rawDescGZIP() []byte {
 
 var file_app_grpc_pb_activation_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_app_grpc_pb_activation_proto_goTypes = []interface{}{
-	(*ActiveUserReq)(nil), // 0: auth.ActiveUserReq
-	(*emptypb.Empty)(nil), // 1: google.protobuf.Empty
+	(*ActivateUserReq)(nil), // 0: auth.ActivateUserReq
+	(*emptypb.Empty)(nil),   // 1: google.protobuf.Empty
 }
 var file_app_grpc_pb_activation_proto_depIdxs = []int32{
-	0, // 0: auth.ActivationService.ActiveUser:input_type -> auth.ActiveUserReq
-	1, // 1: auth.ActivationService.ActiveUser:output_type -> google.protobuf.Empty
+	0, // 0: auth.ActivationService.ActivateUser:input_type -> auth.ActivateUserReq
+	1, // 1: auth.ActivationService.ActivateUser:output_type -> google.protobuf.Empty
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -125,7 +125,7 @@ func file_app_grpc_pb_activation_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_app_grpc_pb_activation_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ActiveUserReq); i {
+			switch v := v.(*ActivateUserReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -169,7 +169,7 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ActivationServiceClient interface {
-	ActiveUser(ctx context.Context, in *ActiveUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ActivateUser(ctx context.Context, in *ActivateUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type activationServiceClient struct {
@@ -180,9 +180,9 @@ func NewActivationServiceClient(cc grpc.ClientConnInterface) ActivationServiceCl
 	return &activationServiceClient{cc}
 }
 
-func (c *activationServiceClient) ActiveUser(ctx context.Context, in *ActiveUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *activationServiceClient) ActivateUser(ctx context.Context, in *ActivateUserReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/auth.ActivationService/ActiveUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/auth.ActivationService/ActivateUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -191,35 +191,35 @@ func (c *activationServiceClient) ActiveUser(ctx context.Context, in *ActiveUser
 
 // ActivationServiceServer is the server API for ActivationService service.
 type ActivationServiceServer interface {
-	ActiveUser(context.Context, *ActiveUserReq) (*emptypb.Empty, error)
+	ActivateUser(context.Context, *ActivateUserReq) (*emptypb.Empty, error)
 }
 
 // UnimplementedActivationServiceServer can be embedded to have forward compatible implementations.
 type UnimplementedActivationServiceServer struct {
 }
 
-func (*UnimplementedActivationServiceServer) ActiveUser(context.Context, *ActiveUserReq) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ActiveUser not implemented")
+func (*UnimplementedActivationServiceServer) ActivateUser(context.Context, *ActivateUserReq) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ActivateUser not implemented")
 }
 
 func RegisterActivationServiceServer(s *grpc.Server, srv ActivationServiceServer) {
 	s.RegisterService(&_ActivationService_serviceDesc, srv)
 }
 
-func _ActivationService_ActiveUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ActiveUserReq)
+func _ActivationService_ActivateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ActivateUserReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ActivationServiceServer).ActiveUser(ctx, in)
+		return srv.(ActivationServiceServer).ActivateUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.ActivationService/ActiveUser",
+		FullMethod: "/auth.ActivationService/ActivateUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ActivationServiceServer).ActiveUser(ctx, req.(*ActiveUserReq))
+		return srv.(ActivationServiceServer).ActivateUser(ctx, req.(*ActivateUserReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -229,8 +229,8 @@ var _ActivationService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*ActivationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ActiveUser",
-			Handler:    _ActivationService_ActiveUser_Handler,
+			MethodName: "ActivateUser",
+			Handler:    _ActivationService_ActivateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

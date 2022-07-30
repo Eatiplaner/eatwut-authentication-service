@@ -8,5 +8,4 @@ dependencies:
   - auth/activation
   - user/login_signup
   - user/confirmation
-  - user/profile
 command: protoc $outpb/$dependency.proto --go_out=plugins=grpc:.
