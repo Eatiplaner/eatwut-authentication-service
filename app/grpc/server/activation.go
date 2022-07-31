@@ -6,6 +6,7 @@ import (
 	pb "Eatiplan-Auth/app/grpc/rpc_pb"
 	"Eatiplan-Auth/app/kafka/procedures"
 	"context"
+	"errors"
 	"log"
 
 	"Eatiplan-Auth/app/services"
@@ -47,6 +48,18 @@ func (*ActivationServer) RegenerateConfirmationByEmail(ctx context.Context, req 
 	resp, error := client.Service.FindUserInfoByEmail(&rpc_pb.FindUserByEmailReq{
 		Email: email,
 	})
+
+	check_activation_resp, err := client.Service.CheckActivation(&rpc_pb.CheckActivationReq{
+		UserId: resp.Id,
+	})
+
+	if err == nil {
+		if check_activation_resp.IsActive {
+			error = errors.New("user has been activated before")
+		}
+	} else {
+		error = err
+	}
 
 	if error == nil {
 		user_id := resp.Id
