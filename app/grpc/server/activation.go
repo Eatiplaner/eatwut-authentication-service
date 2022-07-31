@@ -40,7 +40,7 @@ func (*ActivationServer) ActivateUser(ctx context.Context, req *pb.ActivateUserR
 }
 
 func (*ActivationServer) RegenerateConfirmationByEmail(ctx context.Context, req *pb.RegenerateConfirmationByEmailReq) (*emptypb.Empty, error) {
-	log.Println("Regenerate Confiration Email is processing...")
+	log.Println("Regenerate Confirmation Email is processing...")
 	log.Printf("Email: %s", req.GetEmail())
 
 	email := req.GetEmail()
