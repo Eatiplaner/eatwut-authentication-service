@@ -48,7 +48,7 @@ func (*ActivationServer) RegenerateConfirmationByEmail(ctx context.Context, req 
 		Email: email,
 	})
 
-	if error != nil {
+	if error == nil {
 		user_id := resp.Id
 
 		token, err := services.CreateToken(uint64(user_id))
