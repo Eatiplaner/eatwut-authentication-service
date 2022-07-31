@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/revel/revel"
@@ -43,8 +44,9 @@ func (c JwtAuth) Signup() revel.Result {
 		return c.RenderJSON(err.Error())
 	}
 
-	token, err := services.CreateToken(uint64(1))
+	token, err := services.CreateToken(uint64(user.Id))
 
+	log.Printf("Sent Confirmation Notification To Email %s", user.Email)
 	procedures.SendNotification(map[string]interface{}{
 		"communication_type": "email",
 		"data": map[string]string{

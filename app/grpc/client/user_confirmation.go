@@ -18,3 +18,9 @@ func (c *ClientService) ActiveUser(params *rpc_pb.ActiveUserReq) (*empty.Empty, 
 
 	return client.ActiveUser(context.Background(), params)
 }
+
+func (c *ClientService) FindUserInfoByEmail(params *rpc_pb.FindUserByEmailReq) (*rpc_pb.FindUserByEmailResp, error) {
+	client := rpc_pb.NewConfirmationServiceClient(c.conn())
+
+	return client.FindUserInfoByEmail(context.Background(), params)
+}
