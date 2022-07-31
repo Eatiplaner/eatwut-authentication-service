@@ -1,7 +1,7 @@
 package procedures
 
 import (
-	kafka_config "Eatiplan-Auth/app/kafka"
+	"os"
 
 	"context"
 	"encoding/json"
@@ -17,7 +17,7 @@ func SendNotification(msg map[string]interface{}) {
 
 	b, _ := json.Marshal(msg)
 
-	conn, err := kafka.DialLeader(context.Background(), "tcp", kafka_config.KafkaHost, topic, partition)
+	conn, err := kafka.DialLeader(context.Background(), "tcp", os.Getenv("KAFKA_BOOTSTRAP_SERVER"), topic, partition)
 	if err != nil {
 		log.Fatal("failed to dial leader:", err)
 	}
