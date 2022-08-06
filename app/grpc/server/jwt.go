@@ -24,10 +24,8 @@ func (*JwtServer) ValidToken(ctx context.Context, req *pb.ValidRequest) (*pb.Val
 
 	// Check User is Active or not after valid token
 	if error == nil {
-		user_id, _ := services.ExtractUserIdFromToken(token)
-
 		resp, err := client.Service.CheckActivation(&rpc_pb.CheckActivationReq{
-			UserId: user_id,
+			Token: token,
 		})
 
 		if err != nil {
