@@ -11,6 +11,7 @@ import (
 
 	"Eatiplan-Auth/app/services"
 
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -18,21 +19,32 @@ type ActivationServer struct {
 	pb.ActivationServiceServer
 }
 
-func (*ActivationServer) ActivateUser(ctx context.Context, req *pb.ActivateUserReq) (*emptypb.Empty, error) {
+func (*ActivationServer) ActivateUser(ctx context.Context, req *emptypb.Empty) (*emptypb.Empty, error) {
 	log.Println("Active User is processing...")
-	log.Printf("Token: %s", req.GetToken())
+	var values []string
+	var error error
 
-	token := req.GetToken()
-	error := services.TokenValid(token)
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		values = md.Get("authorization")
+	}
 
-	if error == nil {
-		_, err := client.Service.ActiveUser(&rpc_pb.ActiveUserReq{
-			Token: token,
-		})
+	if len(values) > 0 {
+		token := values[0]
 
-		if err != nil {
-			error = err
+		log.Printf("Token: %s", token)
+
+		error = services.TokenValid(token)
+
+		if error == nil {
+			_, err := client.Service.ActiveUser(ctx, token)
+
+			if err != nil {
+				error = err
+			}
 		}
+	} else {
+		error = errors.New("Authorization has not been set yet in metadata")
 	}
 
 	resp := &emptypb.Empty{}
@@ -61,9 +73,7 @@ func (*ActivationServer) RegenerateConfirmationByEmail(ctx context.Context, req 
 		return &emptypb.Empty{}, create_token_err
 	}
 
-	check_activation_resp, check_activation_err := client.Service.CheckActivation(&rpc_pb.CheckActivationReq{
-		Token: token.AccessToken,
-	})
+	check_activation_resp, check_activation_err := client.Service.CheckActivation(ctx, token.AccessToken)
 
 	if check_activation_err != nil {
 		return &emptypb.Empty{}, check_activation_err

@@ -25,7 +25,7 @@ brew install yq # For Mac
 ### Start the web server:
 
 ```bash
-revel run myapp
+revel run
 ```
 
 ### Go to http://localhost:9000/ and you'll see:

@@ -5,18 +5,21 @@ import (
 	"context"
 
 	"github.com/golang/protobuf/ptypes/empty"
+	"google.golang.org/grpc/metadata"
 )
 
-func (c *ClientService) CheckActivation(params *rpc_pb.CheckActivationReq) (*rpc_pb.CheckActivationResp, error) {
+func (c *ClientService) CheckActivation(ctx context.Context, token string) (*rpc_pb.CheckActivationResp, error) {
 	client := rpc_pb.NewConfirmationServiceClient(c.conn())
+	ctx = metadata.AppendToOutgoingContext(ctx, "Authorization", token)
 
-	return client.CheckActivation(context.Background(), params)
+	return client.CheckActivation(ctx, &empty.Empty{})
 }
 
-func (c *ClientService) ActiveUser(params *rpc_pb.ActiveUserReq) (*empty.Empty, error) {
+func (c *ClientService) ActiveUser(ctx context.Context, token string) (*empty.Empty, error) {
 	client := rpc_pb.NewConfirmationServiceClient(c.conn())
+	ctx = metadata.AppendToOutgoingContext(ctx, "Authorization", token)
 
-	return client.ActiveUser(context.Background(), params)
+	return client.ActiveUser(ctx, &empty.Empty{})
 }
 
 func (c *ClientService) FindUserInfoByEmail(params *rpc_pb.FindUserByEmailReq) (*rpc_pb.FindUserByEmailResp, error) {
