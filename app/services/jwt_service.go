@@ -13,6 +13,8 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/revel/revel"
 	"github.com/twinj/uuid"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type AccessDetails struct {
@@ -100,11 +102,17 @@ func RefreshToken(refreshToken string) (*integrations.JwtToken, error) {
 func TokenValid(tokenString string) error {
 	token, err := verifyToken(tokenString)
 	if err != nil {
-		return err
+		if err.Error() == jwt.ErrSignatureInvalid.Error() {
+			return err
+		}
+
+		return status.Error(codes.Unauthenticated, err.Error())
 	}
+
 	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
-		return err
+		return status.Error(codes.Unauthenticated, err.Error())
 	}
+
 	return nil
 }
 

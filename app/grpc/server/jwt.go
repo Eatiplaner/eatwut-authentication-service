@@ -17,7 +17,7 @@ type JwtServer struct {
 	pb.JwtServiceServer
 }
 
-func (*JwtServer) ValidToken(ctx context.Context, req *emptypb.Empty) (*pb.ValidResponse, error) {
+func (*JwtServer) ValidActivationToken(ctx context.Context, req *emptypb.Empty) (*pb.ValidResponse, error) {
 	log.Println("Valid Token is processing...")
 	var values []string
 	var error error
@@ -53,5 +53,32 @@ func (*JwtServer) ValidToken(ctx context.Context, req *emptypb.Empty) (*pb.Valid
 	}
 
 	log.Println("Valid Token processed Done")
+	return resp, error
+}
+
+func (*JwtServer) ValidToken(ctx context.Context, req *emptypb.Empty) (*pb.ValidResponse, error) {
+	log.Println("Valid Token is processing...")
+	var values []string
+	var error error
+
+	md, ok := metadata.FromIncomingContext(ctx)
+	if ok {
+		values = md.Get("authorization")
+	}
+
+	if len(values) > 0 {
+		token := values[0]
+		log.Printf("Token: %s", token)
+		error = services.TokenValid(token)
+	} else {
+		error = errors.New("Authorization has not been set yet in metadata")
+	}
+
+	resp := &pb.ValidResponse{
+		Valid: error == nil,
+	}
+
+	log.Println("Valid Token processed Done")
+
 	return resp, error
 }
