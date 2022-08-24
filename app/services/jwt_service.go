@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"Eatiplan-Auth/app/integrations"
+	"Eatwut-Auth/app/integrations"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/revel/revel"

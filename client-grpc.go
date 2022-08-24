@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	pb "Eatiplan-Auth/app/grpc/rpc_pb"
+	pb "Eatwut-Auth/app/grpc/rpc_pb"
 
 	"google.golang.org/grpc"
 )

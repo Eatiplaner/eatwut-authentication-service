@@ -1,7 +1,7 @@
 package client
 
 import (
-	"Eatiplan-Auth/app/grpc/rpc_pb"
+	"Eatwut-Auth/app/grpc/rpc_pb"
 	"context"
 )
 

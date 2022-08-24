@@ -6,11 +6,11 @@ import (
 
 	"github.com/revel/revel"
 
-	"Eatiplan-Auth/app/grpc/client"
-	"Eatiplan-Auth/app/grpc/rpc_pb"
-	"Eatiplan-Auth/app/integrations"
-	"Eatiplan-Auth/app/kafka/procedures"
-	"Eatiplan-Auth/app/services"
+	"Eatwut-Auth/app/grpc/client"
+	"Eatwut-Auth/app/grpc/rpc_pb"
+	"Eatwut-Auth/app/integrations"
+	"Eatwut-Auth/app/kafka/procedures"
+	"Eatwut-Auth/app/services"
 )
 
 type JwtAuth struct {
@@ -19,6 +19,8 @@ type JwtAuth struct {
 
 func (c JwtAuth) Login() revel.Result {
 	var userParams rpc_pb.FindUserRequest
+	token, err := services.CreateToken(uint64(1))
+	print(token.AccessToken)
 
 	c.Params.BindJSON(&userParams)
 
@@ -29,7 +31,7 @@ func (c JwtAuth) Login() revel.Result {
 		return c.RenderJSON("Please provide correct credential")
 	}
 
-	token, err := services.CreateToken(uint64(user.Id))
+	token, err = services.CreateToken(uint64(user.Id))
 	return renderUserAndToken(c, user, token, err)
 }
 

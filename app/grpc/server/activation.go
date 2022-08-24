@@ -1,15 +1,15 @@
 package server
 
 import (
-	"Eatiplan-Auth/app/grpc/client"
-	"Eatiplan-Auth/app/grpc/rpc_pb"
-	pb "Eatiplan-Auth/app/grpc/rpc_pb"
-	"Eatiplan-Auth/app/kafka/procedures"
+	"Eatwut-Auth/app/grpc/client"
+	"Eatwut-Auth/app/grpc/rpc_pb"
+	pb "Eatwut-Auth/app/grpc/rpc_pb"
+	"Eatwut-Auth/app/kafka/procedures"
 	"context"
 	"errors"
 	"log"
 
-	"Eatiplan-Auth/app/services"
+	"Eatwut-Auth/app/services"
 
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/emptypb"

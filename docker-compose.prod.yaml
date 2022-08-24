@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  eatiplan-auth:
+  eatwut-auth:
     image: ghcr.io/eatiplaner/eatiplaner-authentication-service:latest
     ports:
       - 9000:9000

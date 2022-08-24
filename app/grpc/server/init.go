@@ -9,7 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 
-	pb "Eatiplan-Auth/app/grpc/rpc_pb"
+	pb "Eatwut-Auth/app/grpc/rpc_pb"
 
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"

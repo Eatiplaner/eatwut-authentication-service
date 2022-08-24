@@ -7,8 +7,8 @@ import (
 	_ "github.com/revel/modules"
 	"github.com/revel/revel"
 
-	eatiplan_grpc "Eatiplan-Auth/app/grpc/server"
-	"Eatiplan-Auth/app/integrations"
+	eatwut_grpc "Eatwut-Auth/app/grpc/server"
+	"Eatwut-Auth/app/integrations"
 )
 
 var (
@@ -73,7 +73,7 @@ var ValidateOrigin = func(c *revel.Controller, fc []revel.Filter) {
 
 func onAppStart() {
 	integrations.InitRedis()
-	eatiplan_grpc.InitGrpcServer()
+	eatwut_grpc.InitGrpcServer()
 }
 
 //func ExampleStartupScript() {

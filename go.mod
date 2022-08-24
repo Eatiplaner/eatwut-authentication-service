@@ -1,4 +1,4 @@
-module Eatiplan-Auth
+module Eatwut-Auth
 
 go 1.17
 
