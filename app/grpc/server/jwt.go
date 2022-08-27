@@ -38,10 +38,10 @@ func (*JwtServer) ValidActivationToken(ctx context.Context, req *emptypb.Empty) 
 
 			if err != nil {
 				error = err
-			}
-
-			if !resp.IsActive {
-				error = errors.New("User has not been activate yet")
+			} else {
+				if !resp.IsActive {
+					error = errors.New("User has not been activate yet")
+				}
 			}
 		}
 	} else {
